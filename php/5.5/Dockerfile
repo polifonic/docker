@@ -1,4 +1,4 @@
-FROM php:5.6-fpm
+FROM php:5.5-fpm
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=non-interactive  apt-get install -yq --no-install-recommends \
