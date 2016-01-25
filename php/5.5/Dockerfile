@@ -1,5 +1,7 @@
 FROM php:5.5-fpm
 
+RUN docker-php-ext-install mbstring
+
 RUN apt-get update \
     && DEBIAN_FRONTEND=non-interactive  apt-get install -yq --no-install-recommends \
         curl \

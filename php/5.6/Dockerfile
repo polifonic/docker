@@ -4,6 +4,7 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=non-interactive  apt-get install -yq --no-install-recommends \
         curl \
         graphviz \
+        libapache2-mod-php5 \
         php5-apcu \
         php5-curl \
         php5-gd \
