@@ -1,10 +1,9 @@
 FROM php:5.5-fpm
 
-RUN docker-php-ext-install mbstring
-
 RUN apt-get update \
     && DEBIAN_FRONTEND=non-interactive  apt-get install -yq --no-install-recommends \
         curl \
+        geoip-database \
         graphviz \
         php5-apcu \
         php5-curl \
@@ -16,20 +15,17 @@ RUN apt-get update \
         php5-mcrypt \
         php5-mysql \
         php5-xsl \
+    && docker-php-ext-install mbstring \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
+    echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory_limit.ini \
+    echo "date.timezone=${PHP_TIMEZONE:-UTC}" > $PHP_INI_DIR/conf.d/date_timezone.ini
 
 # PHP Extensions
 # RUN docker-php-ext-install curl geoip intl json ldap mbstring mcrypt mysql xsl\
 #    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 #    && docker-php-ext-install gd
-
-# Memory Limit
-RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
-
-# Time Zone
-RUN echo "date.timezone=${PHP_TIMEZONE:-UTC}" > $PHP_INI_DIR/conf.d/date_timezone.ini
 
 COPY . /var/symfony
 
